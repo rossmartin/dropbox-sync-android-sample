@@ -1,0 +1,12 @@
+# view AndroidManifest.xml #generated:13
+-keep class com.dropbox.client2.android.AuthActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:12
+-keep class com.dropbox.sync.android.DbxAuthActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:21
+-keep class com.dropbox.sync.android.DbxSyncService { <init>(...); }
+
+# view AndroidManifest.xml #generated:6
+-keep class com.rossmartin.dropbox.PhoneGapSync { <init>(...); }
+

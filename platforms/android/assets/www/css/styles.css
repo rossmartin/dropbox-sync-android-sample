@@ -1,0 +1,385 @@
+body {
+    color: #c6c8c8;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/** iscroll **/
+* {
+	-webkit-box-sizing: border-box;
+}
+
+.iScrollIndicator {
+    background: #a1a0a1 !important;
+    width: 5px !important;
+}
+/** **/
+
+.topcoat-icon--unlink {
+    background: url("../topcoat/img/unlock.svg") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.topcoat-icon--back {
+    background: url("../topcoat/img/back_light.svg") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.topcoat-list__container,
+ul {
+    border-top: none !important;
+}
+
+.topcoat-list__container {
+    border-bottom: none;
+    clear: both;
+}
+
+#scroller, #localFileListScroller {
+    position: absolute;
+    top: 92px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    /** not needed anymore b/c of iscroll, causes issues
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    **/
+    /* need for iscroll */
+    z-index: 1;
+    overflow: hidden;
+}
+
+/*#content {
+    position: absolute;
+    top: 100px;
+    bottom: 4px;
+    left: 305px;
+    right:0px;
+    padding:0px 5px;
+    margin:0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}*/
+
+#fileList, #localFileList {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    /* need for iscroll */
+    z-index: 1;
+    /*-webkit-tap-highlight-color: rgba(0,0,0,0);*/
+	-webkit-transform: translateZ(0);
+	/*-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-webkit-text-size-adjust: none;*/
+}
+
+#fileList {
+    margin-top: -50px; /* ptr */
+}
+
+#fileList li, #localFileList li {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    clear: both;
+}
+
+#fileList li a, #localFileList li a {
+    width: 100%;
+    padding: 18px 0px 18px 0px !important;
+    display: inline-block;
+}
+
+#fileList li a img, #localFileList li a img {
+    float: left;
+    height: 30px;
+    margin-left: 12px;
+    margin-right: 10px;
+    margin-top: -4px;
+    opacity: .7;
+}
+
+#welcomeView {
+    padding:35px 70px 30px 70px; 
+    font-size: 1.1rem;
+}
+
+#welcomeViewLinkContainer {
+    width: 100%; 
+    text-align: center;
+    margin-top: 10px;
+}
+
+#loader {
+    display:none; 
+    position:absolute; 
+    z-index:1; 
+    top: 10px !important; 
+    left: 67px !important;
+}
+
+#theTopcoatNavBar {
+    position:fixed; 
+    top: 0px; 
+    left: 0px;
+    width:100%;
+}
+
+#containerBelowNavBar {
+    margin-top: 64px;
+    width: 100%;
+}
+
+#path, #localPath {
+    margin-top: 64px;
+}
+
+#filePath {
+    padding: 0 5px; 
+}
+
+.page { /* needed b/c of pageslider */
+    text-align: left;
+}
+
+#modalNavHeader {
+    text-align: center;
+}
+
+/** pull to refresh **/
+.pull-to-refresh {
+	line-height: 50px;
+	height: 50px;
+    width: 300px;
+}
+
+.pull-to-refresh >.message {
+	height: 50px;
+	width: 100%;
+	overflow-y: auto;
+	position: relative;
+}
+
+.pull-to-refresh >.message >i.arrow {
+	-webkit-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	background-size: 100% 100%;
+	display: inline-block;
+	margin-left: 10px;
+	background-position: center center;
+}
+
+.pull-to-refresh >.message >i.arrow {
+	width: 20px;
+	height: 50px;
+	background-image: url('../topcoat/img/arrow_up.svg');
+}
+
+.pull-to-refresh >.message > div.spinner {
+    margin-left: 12px;
+}
+
+.pull-to-refresh >.message >span.pull,
+.pull-to-refresh >.message >span.release,
+.pull-to-refresh >.message >span.loading {
+	text-align: center;
+	display: block;
+	height: 50px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/** topcoat effeckt content **/
+.effeckt-modal-wrap { /* custom */
+  max-width: 380px !important;
+  min-width: 380px !important;
+}
+
+.no-transitions,
+.no-transitions * {
+  -webkit-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.page-wrap {
+  float: right;
+  width: 100%;
+}
+
+.effeckt-toggle-demo {
+  min-height: 220px;
+}
+
+[data-toggle-trigger] {
+  margin-bottom: 20px;
+}
+
+.effeckt-modal {
+  background: #dfe2e2;
+  padding: 1.5px; /* custom */
+  border-radius: 6px; /* custom */
+}
+
+.effeckt-overlay {
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.effeckt-button {
+  background: #444;
+  color: white;
+  border: 0;
+  padding: 0.8rem 1rem;
+  font-size: 1.3em;
+  margin: 0 0.25rem 0.6rem 0;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.effeckt-page-transition {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  overflow: hidden;
+  background: #555;
+}
+
+.effeckt-page-transition-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  margin: -100px 0 0 -100px;
+  color: white;
+}
+
+.effeckt-off-screen-nav {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  background: #333;
+  visibility: hidden;
+  width: 12rem;
+}
+
+.effeckt-off-screen-nav a {
+  color: inherit;
+}
+
+.effeckt-off-screen-nav-close {
+  position: absolute;
+  right: .5rem;
+  top: 0;
+  font-size: 150%;
+}
+
+.effeckt-off-screen-nav-close:hover,
+.effeckt-off-screen-nav-close:focus {
+  color: red;
+}
+
+.effeckt-off-screen-nav-rotate.effeckt-off-screen-nav-show ~ .page-wrap .off-screen-nav-cover {
+  background: -webkit-linear-gradient(left, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.9));
+  background: -o-linear-gradient(left, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.9));
+  background: linear-gradient(left, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.9));
+}
+
+/** modal and nav menu list style use white topcoat theme **/
+.white-topcoat-list__container {
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-top: 1px solid #bcbfbf;
+  border-bottom: 1px solid #eff1f1;
+  background-color: #dfe2e2;
+}
+
+.white-topcoat-list__header {
+  margin: 0;
+  padding: 4px 20px;
+  font-size: 0.9em;
+  font-weight: 400;
+  background-color: #cccfcf;
+  color: #656565;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  border-top: solid 1px rgba(255, 255, 255, 0.5);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.23);
+}
+
+.white-topcoat-list,
+.effeckt-list-scroll {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  border-top: 1px solid #bcbfbf;
+  color: #454545;
+}
+
+.white-topcoat-list__item,
+.effeckt-list-scroll li {
+  margin: 0;
+  padding: 0;
+  padding: 1.25rem;
+  border-top: 1px solid #eff1f1;
+  border-bottom: 1px solid #bcbfbf;
+  text-align: left; /* custom */
+}
+
+.white-topcoat-list__item:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* over-ride some default styles */
+.white-topcoat-list__container {
+    border-top: none !important;
+}
+
+.white-topcoat-list__container {
+    border-bottom: none;
+    clear: both;
+}
+
+.white-topcoat-list, .white-topcoat-list li, .white-topcoat-list li a {
+    width: 100% !important;
+}
+
+.white-topcoat-list li a {
+    display: inline-block;
+}

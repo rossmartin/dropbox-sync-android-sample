@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.rossmartin.DropboxSync"
+    version="1.0.1">
+    
+    <name>Dropbox Sync</name>
+    <author>Ross Martin</author>
+    <description>
+        This plugin allows your application to use the Dropbox Sync API
+    </description>
+    <keywords>Dropbox, Dropbox Sync, Dropbox Upload, Dropbox Download</keywords>
+    <license>MIT</license>
+
+    <js-module src="www/dropbox-sync.js" name="DropboxSync">
+        <clobbers target="window.DropboxSync" />
+    </js-module>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="DropboxSync">
+                <param name="android-package" value="com.rossmartin.DropboxSync.DropboxSync" />
+            </feature>
+        </config-file>
+        <!-- add to manifest -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.dropbox.sync.android.DbxAuthActivity" />
+            <activity android:launchMode="singleTask" android:name="com.dropbox.client2.android.AuthActivity">
+                <intent-filter>
+                    <data android:scheme="db-81v5tm7jg21zk8c" /><!-- replace this with your app key -->
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+            <service android:enabled="true" android:exported="false" android:label="Dropbox Sync" android:name="com.dropbox.sync.android.DbxSyncService" />
+        </config-file>
+        <!-- add plugin class -->
+        <source-file src="src/android/DropboxSync.java" target-dir="src/com/rossmartin/DropboxSync" />
+        <!-- add Dropbox Sync API libs -->
+        <source-file src="src/android/dropbox-sync-sdk-android.jar" target-dir="libs" />
+        <source-file src="src/android/android-support-v4.jar" target-dir="libs" />
+        <source-file src="src/android/armeabi/libDropboxSync.so" target-dir="libs/armeabi/" />
+        <source-file src="src/android/armeabi/libDropboxSync.so" target-dir="libs/mips/" />
+        <source-file src="src/android/armeabi/libDropboxSync.so" target-dir="libs/x86/" />
+    </platform>
+    
+    <info>
+        Work with files on Dropbox through a familiar, file system-like interface. 
+        The Sync API takes care of syncing and notifying you of remote changes so your app can respond instantly. 
+        It also handles caching, network flakiness, and offline logic so you don't have to.
+    </info>
+</plugin>

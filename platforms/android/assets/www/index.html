@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, target-densitydpi=device-dpi">
+    <link href="topcoat/css/topcoat-mobile-dark.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/pageslider.css" rel="stylesheet">
+    <link href="topcoat/topcoat-effeckt/css/modals.autoprefixed.css" rel="stylesheet">
+    <link href="topcoat/topcoat-effeckt/css/off-screen-nav.autoprefixed.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="effeckt-off-screen-nav white-topcoat-list__container" id="effeckt-off-screen-nav">
+        <!-- filled by topcoatList-tpl -->
+    </nav>
+
+    <!-- dialogs first is important for ~ selector -->
+    <div class="effeckt-modal-wrap" id="effeckt-modal-wrap"> <!-- for centering transform -->
+        <div class="effeckt-modal topcoat-overlay" id="effeckt-modal">
+            <div class="white-topcoat-list__container" id="modalViewListContainer">
+                <!-- filled by topcoatList-tpl -->
+            </div>
+        </div>
+    </div>
+    <!-- overlay coming after is important for ~ selector -->
+    <div class="effeckt-overlay no-transitions" id="effeckt-overlay"></div>
+    
+    <div class="page-wrap no-transitions" id="page-wrap">
+    
+        <div class="topcoat-spinner" id="loader"></div>
+        
+        <div id="viewContainer"></div> <!-- views are inserted here, only 1 is in at a time -->
+            
+        <div class="off-screen-nav-cover"></div>
+        
+        <button id="btn-modalView" style="display: none;" class="modal2-button topcoat-button" data-modal-type="modal-10">3D Sign</button> <!-- just triggers modal -->
+    
+    </div>
+
+   <!-- handlebars templates -->
+   <script id="topcoatList-tpl" type="text/x-handlebars-template">
+        {{#if header}}
+            <h4 id="modalNavHeader" class="white-topcoat-list__header">
+                {{header}}
+            </h4>
+        {{/if}}
+        <ul class="white-topcoat-list">
+            {{#each listItem}}
+                <li class="white-topcoat-list__item">
+                    <a href="#" id="{{id}}" {{#if onClickEvent}} onclick="{{onClickEvent}}; return false;" {{/if}} >{{text}}</a>
+                </li>
+            {{/each}}
+        </ul>
+   </script>
+
+   <script id="welcomeView-tpl" type="text/x-handlebars-template">
+        <div id="theTopcoatNavBar" class="topcoat-navigation-bar">
+            <div class="topcoat-navigation-bar__item left quarter">
+                <a id="btn-back" class="topcoat-icon-button--quiet" href="#" style="display: none;">
+                  <span class="topcoat-icon topcoat-icon--back"></span>
+                </a>
+            </div>
+            <div class="topcoat-navigation-bar__item center half">
+                <h1 class="topcoat-navigation-bar__title">PhoneGap Sync</h1>
+            </div>
+            <div class="topcoat-navigation-bar__item right quarter">
+            </div>
+        </div>
+        <div id="containerBelowNavBar">
+            <div id="welcomeView">
+                <h2>Welcome to PhoneGap Sync for Android</h2>
+                <p>Once you link this application to your Dropbox account, an /Apps/PhoneGapSync folder is created in your Dropbox.
+                    All the files you move to that folder on your computer will automatically be available in this app.
+                    The Dropbox app does not need to be installed on your device and will work with it installed too. The synchronization process is entirely managed by the plugin.</p>
+                <p>The Dropbox Sync PhoneGap plugin makes it incredibly easy to write synchronization-based applications:
+                    synchronized photo viewer, synchronized notes, etc.  The plugin now allows you to upload files and folders from your device to Dropbox.
+                </p>
+                <div id="welcomeViewLinkContainer">
+                    <a id="btn-link" class="topcoat-button--large--cta">Link to Dropbox</a>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="dropboxView-tpl" type="text/x-handlebars-template">
+        <div id="theTopcoatNavBar" class="topcoat-navigation-bar">
+            <div class="topcoat-navigation-bar__item left quarter">
+                <a id="btn-back" class="topcoat-icon-button--quiet" href="#">
+                  <span class="topcoat-icon topcoat-icon--back"></span>
+                </a>
+            </div>
+            <div id="centerNavBar" class="topcoat-navigation-bar__item center half">
+                <h1 class="topcoat-navigation-bar__title">
+                    <span style="font-size:16px;">Dropbox Apps Folder</span>
+                </h1>
+            </div>
+            <div class="topcoat-navigation-bar__item right quarter">
+                <a id="btn-navMenu" class="topcoat-icon-button--quiet off-screen-nav-button" data-effeckt="effeckt-off-screen-nav-right-push">
+                    <span class="topcoat-icon topcoat-icon--menu-stack"></span>
+                </a>
+            </div>
+        </div>
+        <div id="containerBelowNavBar">
+            <div id="dropboxView">
+                <h3 id="path" class="topcoat-list__header">/</h3>
+                <div id="scroller" class="topcoat-list__container">
+                    <ul id="fileList" class="topcoat-list"></ul>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script id="fileList-tpl" type="text/x-handlebars-template">
+        {{#each this}}
+            {{#if isFolder}}
+                <li class="topcoat-list__item">
+                    <a href="#{{encodedPath}}" class="folder">
+                        <img src="img/icon-folder.png" /> {{fileName}}
+                     </a>
+                </li>
+            {{else}}
+                <li class="topcoat-list__item">
+                    <a href="#{{encodedPath}}" class="file">
+                        <img src="img/icon-file.png" /> {{fileName}}
+                     </a>
+                </li>
+            {{/if}}
+        {{else}}
+            <li class="topcoat-list__item" style="padding:5px;">No files found in this directory.</li>
+        {{/each}}
+    </script>
+
+    <script id="fileUploadView-tpl" type="text/x-handlebars-template">
+        <div id="theTopcoatNavBar" class="topcoat-navigation-bar">
+            <div class="topcoat-navigation-bar__item left quarter">
+                <a id="btn-back" class="topcoat-icon-button--quiet" href="#">
+                  <span class="topcoat-icon topcoat-icon--back"></span>
+                </a>
+            </div>
+            <div id="centerNavBar" class="topcoat-navigation-bar__item center half">
+                <h1 class="topcoat-navigation-bar__title">
+                    <span style="font-size:16px;">Tap &amp; hold a file/folder to upload</span>
+                </h1>
+            </div>
+            <div class="topcoat-navigation-bar__item right quarter">
+                <a id="btn-navMenu" class="topcoat-icon-button--quiet off-screen-nav-button" data-effeckt="effeckt-off-screen-nav-right-push">
+                    <span class="topcoat-icon topcoat-icon--menu-stack"></span>
+                </a>
+            </div>
+        </div>
+        <div id="containerBelowNavBar">
+            <div id="fileUploadView">
+                <h3 id="localPath" class="topcoat-list__header"></h3>
+                <div id="localFileListScroller" class="topcoat-list__container">
+                    <ul id="localFileList" class="topcoat-list"></ul>
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <script id="localFileList-tpl" type="text/x-handlebars-template">
+        {{#each this}}
+            {{#if isDirectory}}
+                <li class="topcoat-list__item">
+                    <a href="#" class="folder" fullPath="{{fullPath}}" fileName="{{name}}">
+                        <img src="img/icon-folder.png" /> {{name}}
+                     </a>
+                </li>
+            {{else}}
+                <li class="topcoat-list__item">
+                    <a href="#" class="file" fullPath="{{fullPath}}" fileName="{{name}}">
+                        <img src="img/icon-file.png" /> {{name}}
+                     </a>
+                </li>
+            {{/if}}
+        {{else}}
+            <li class="topcoat-list__item" style="padding:5px;">No files found in this directory.</li>
+        {{/each}}
+    </script>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="lib/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="lib/fastclick.js"></script>
+    <script type="text/javascript" src="lib/handlebars.js"></script>
+    <script type="text/javascript" src="lib/jquery.tapandhold.js"></script>
+    <script type="text/javascript" src="lib/jquery.plugin.pullToRefresh.js"></script>
+    <script type="text/javascript" src="lib/encoder.js"></script>
+    <script type="text/javascript" src="lib/iscroll.js"></script>
+    <script type="text/javascript" src="lib/pageslider.js"></script>
+    <script type="text/javascript" src="topcoat/topcoat-effeckt/js/demo.js"></script>
+    <script type="text/javascript" src="topcoat/topcoat-effeckt/js/modals.js"></script>
+    <script type="text/javascript" src="topcoat/topcoat-effeckt/js/off-screen-nav.js"></script>
+    <script type="text/javascript" src="js/plugins/file-opener.js"></script>
+    <script type="text/javascript" src="js/views/WelcomeView.js"></script>
+    <script type="text/javascript" src="js/views/DropboxView.js"></script>
+    <script type="text/javascript" src="js/views/FileUploadView.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+
+</body>
+</html>
